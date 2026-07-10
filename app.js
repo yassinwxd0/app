@@ -1,14 +1,63 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = 5500;
 const mongoose = require("mongoose");
 app.use(express.urlencoded({ extended: true }));
-const Alldata = require("./models/schema");
-app.set('view engine', 'ejs');  
+const User = require("./models/schema");
+app.set("view engine", "ejs");
+app.use(express.static("public"));
+app.use("/uploads", express.static("uploads"));
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+var methodOverride = require('method-override')
+app.use(methodOverride('_method'))
 
+
+
+/// GET Request
 
 app.get("/", (req, res) => {
-  res.render("index");
+  User.find()
+    .then((result) => {
+      res.render("index", { arr: result });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.get("/edit", (req, res) => {
+  res.render("edit");
+});
+
+app.get("/new", (req, res) => {
+  res.render("new");
+});
+
+app.get("/show/:id", (req, res) => {
+  User.findById(req.params.id)
+    .then((result) => {
+      console.log(result);
+      res.render("show" , {arr: result});
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+
+
+//delete
+app.delete('/index/:id', (req, res) => {
+  User
+  .findByIdAndDelete(req.params.id)
+  .then(() => {
+    console.log();
+    res.redirect("/");
+  })
+  .catch((err) => {
+    console.log(err);
+  })
 });
 
 mongoose
@@ -17,26 +66,26 @@ mongoose
   )
   .then(() => {
     app.listen(port, () => {
-      console.log(`http://localhost:3000/`);
+      console.log(`http://localhost:5500/`);
     });
   })
   .catch((err) => {
     console.log(err);
   });
 
-app.post("/", (req, res) => {
+app.post("/new", upload.single("picture"), (req, res) => {
   console.log(req.body);
-  const data = new Alldata(req.body);
+  console.log(req.file);
+  const data = new User({
+    ...req.body,
+    Picture: req.file ? req.file.filename : undefined,
+  });
   data
     .save()
     .then(() => {
-      res.redirect("/index.html");
+      res.redirect("/");
     })
     .catch((err) => {
       console.log(err);
     });
-});
-
-app.get("/index.html", (req, res) => {
-  res.sendFile("./views/res.html", { root: __dirname });
 });

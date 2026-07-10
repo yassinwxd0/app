@@ -1,0 +1,393 @@
+/* ============================================================
+   Personnel Ledger — design tokens
+   ============================================================ */
+:root{
+    --ink: #16233D;
+    --ink-soft: #3B4A63;
+    --muted: #6B7686;
+    --paper: #EEF1F5;
+    --surface: #FFFFFF;
+    --line: #DCE1E8;
+    --line-strong: #B9C1CC;
+
+    --accent: #0F766E;
+    --accent-dark: #0B5A54;
+    --accent-tint: #E4F2F0;
+
+    --danger: #B23B22;
+    --danger-tint: #F7E7E2;
+
+    --radius: 10px;
+    --radius-sm: 6px;
+
+    --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+    --font-body: 'Inter', 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+*{ box-sizing: border-box; }
+
+body{
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    min-height: 100vh;
+}
+
+section.p-3{
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 32px 20px 60px !important;
+}
+
+/* ============================================================
+   Page header
+   ============================================================ */
+.ledger-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 28px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid var(--ink);
+}
+
+.ledger-header .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.ledger-header h1{
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+
+.ledger-header .count{
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* ============================================================
+   Buttons (re-skin Bootstrap, keep markup as-is)
+   ============================================================ */
+.btn{
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+    border-radius: var(--radius-sm);
+    padding: 9px 16px;
+    border: 1px solid transparent;
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.btn:active{ transform: translateY(1px); }
+.btn:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+.btn-primary{
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+}
+.btn-primary:hover{ background: #0E1A2C; border-color: #0E1A2C; color: #fff; }
+
+.btn-success{
+    background: var(--accent-tint);
+    border-color: var(--accent);
+    color: var(--accent-dark);
+}
+.btn-success:hover{ background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.btn-danger{
+    background: var(--danger-tint);
+    border-color: var(--danger);
+    color: var(--danger);
+}
+.btn-danger:hover{ background: var(--danger); border-color: var(--danger); color: #fff; }
+
+.btn-secondary{
+    background: transparent;
+    border-color: var(--line-strong);
+    color: var(--ink-soft);
+}
+.btn-secondary:hover{ background: var(--surface); border-color: var(--ink); color: var(--ink); }
+
+.btn i{ font-size: 15px; vertical-align: -2px; }
+
+/* ============================================================
+   Ledger table (index page)
+   ============================================================ */
+.table-wrap{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow-x: auto;
+}
+
+table.ledger{
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+}
+
+table.ledger thead th{
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: 18px 16px;
+    text-align: center;
+    font-weight: 600;
+}
+
+table.ledger tbody td{
+    vertical-align: middle;
+    padding: 18px 16px;
+    border-bottom: 1px solid var(--line);
+    font-size: 16px;
+    text-align: center;
+}
+table.ledger td.date{
+    white-space: nowrap;
+}
+
+table.ledger tbody tr:last-child td{ border-bottom: none; }
+table.ledger tbody tr:hover{ background: var(--paper); }
+
+table.ledger td.idx{
+    font-family: var(--font-mono);
+    color: var(--accent-dark);
+    font-weight: 600;
+    width: 48px;
+}
+
+table.ledger td.name{
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-align: left;
+}
+
+table.ledger td.date, table.ledger td.phone{
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--ink-soft);
+}
+
+table.ledger img.avatar{
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    border: 2px solid var(--line);
+    object-fit: cover;
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 1px 3px rgba(22, 35, 61, 0.08);
+    transition: transform .15s ease, border-color .15s ease;
+}
+
+table.ledger tbody tr:hover img.avatar{
+    border-color: var(--accent);
+    transform: scale(1.05);
+}
+
+table.ledger td.actions{
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+table.ledger td.actions .btn{
+    padding: 8px 13px;
+    margin: 0;
+}
+
+table.ledger td.actions .btn i{
+    font-size: 17px;
+}
+
+/* ============================================================
+   Form card (new / edit / show)
+   ============================================================ */
+.form-card{
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0;
+    overflow: hidden;
+}
+
+.form-card .form-card-header{
+    padding: 24px 32px;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+}
+
+.form-card .form-card-header .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.form-card .form-card-header h2{
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.form-card form{
+    display: flex;
+    align-items: flex-start;
+    padding: 32px;
+    gap: 36px;
+    flex-wrap: wrap;
+}
+
+/* --- Badge photo panel: the signature element --- */
+.badge-photo{
+    flex: 0 0 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.badge-frame{
+    position: relative;
+    width: 180px;
+    height: 180px;
+    padding: 10px;
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--paper);
+}
+
+.badge-frame::before, .badge-frame::after{
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: var(--accent);
+    border-style: solid;
+}
+.badge-frame::before{ top: -1px; left: -1px; border-width: 3px 0 0 3px; }
+.badge-frame::after{ bottom: -1px; right: -1px; border-width: 0 3px 3px 0; }
+
+.badge-frame img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    display: block;
+}
+
+.badge-photo .badge-label{
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.badge-photo .upload{
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line-strong);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+    cursor: pointer;
+    background: var(--surface);
+}
+.badge-photo .upload:hover{ border-color: var(--accent); color: var(--accent-dark); }
+.badge-photo .upload input{
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* --- Field grid --- */
+.field-grid{
+    flex: 1 1 380px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+}
+
+.field-grid .field{ display: flex; flex-direction: column; gap: 6px; }
+.field-grid .field.span-2{ grid-column: 1 / -1; }
+
+.field label{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.field label::after{ content: " *"; color: var(--danger); }
+.field label.optional::after{ content: ""; }
+
+.field input{
+    border: none;
+    border-bottom: 2px solid var(--line-strong);
+    background: transparent;
+    padding: 8px 2px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .12s ease;
+}
+.field input:focus{ border-color: var(--accent); }
+.field input:disabled{
+    border-bottom-style: dotted;
+    color: var(--ink-soft);
+}
+
+.form-card .form-card-footer{
+    padding: 20px 32px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 640px){
+    .form-card form{ flex-direction: column; align-items: center; }
+    .field-grid{ grid-template-columns: 1fr; width: 100%; }
+    table.ledger{ font-size: 13px; }
+    .ledger-header h1{ font-size: 24px; }
+}

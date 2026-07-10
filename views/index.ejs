@@ -1,32 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        h1 {
-            display: inline;
-            margin-right: 10px;
-        }
-        body{
-            background-color:red ;
-        }
-        div{
-           display: flex;
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-        }
-    </style>
-</head>
-<body>
-    <form action="/" method="post">
-        <div>
-       <h1>NAME :   </h1> <input type="text" name="username" id="">
-        <button>SEND TO DB</button>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <title>Personnel Ledger</title>
+
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+
+    <section class="p-3">
+
+        <div class="ledger-header">
+            <div>
+                <span class="eyebrow">Personnel Ledger</span>
+                <h1>Employee Directory</h1>
+            </div>
+            <div style="display:flex; align-items:center; gap:18px;">
+                <span class="count">01 record on file</span>
+                <a href="new" class="btn btn-primary">New Entry <i class="bi bi-person-plus"></i></a>
+            </div>
         </div>
-    </form>
-</body>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="table-wrap">
+                    <table class="ledger">
+
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>City</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Post</th>
+                                <th>Start Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <!--
+                                Static example row. 
+                                Repeat this <tr> per employee once your backend supplies the data.
+                            -->
+                           <% arr.forEach((element , index) => { %>
+                             <tr>
+                                <td class="idx"><%= index+1 %></td>
+                                <td><img src="/uploads/<%= element.Picture %>" alt="<%= element.Name %>" width="42" height="42" class="avatar"></td>
+                                <td class="name"><%= element.Name %></td>
+                                <td><%= element.Age %></td>
+                                <td><%= element.City %></td>
+                                <td><%= element.Email %></td>
+                                <td class="phone"><%= element.Phone %></td>
+                                <td><%= element.Post %></td>
+                                <td class="date"><%= element.Start_Date %></td> 
+                                <td class="actions">
+                                    <!-- GET -->
+                                    <a href="show/<%= element._id%>" class="btn btn-success"><i class="bi bi-eye"></i></a>
+
+                                    <!-- GET (edit form) -->
+                                    <a href="edit" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+
+                                    <!-- POST (treat as delete on the backend) -->
+                                    <form action="/index/<%= element._id %>?_method=DELETE" method="POST" style="display:inline">
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                           <% }) %>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
 </html>
