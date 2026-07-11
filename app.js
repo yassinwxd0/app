@@ -26,8 +26,16 @@ app.get("/", (req, res) => {
     });
 });
 
-app.get("/edit", (req, res) => {
-  res.render("edit");
+app.get("/edit/:id", (req, res) => {
+  User
+  .findById(req.params.id)
+  .then((result) => {
+    res.render("edit" , {arr: result});
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+  
 });
 
 app.get("/new", (req, res) => {
@@ -37,7 +45,6 @@ app.get("/new", (req, res) => {
 app.get("/show/:id", (req, res) => {
   User.findById(req.params.id)
     .then((result) => {
-      console.log(result);
       res.render("show" , {arr: result});
     })
     .catch((err) => {
@@ -52,13 +59,35 @@ app.delete('/index/:id', (req, res) => {
   User
   .findByIdAndDelete(req.params.id)
   .then(() => {
-    console.log();
     res.redirect("/");
   })
   .catch((err) => {
     console.log(err);
   })
 });
+
+
+//PUT
+app.put('/edit/:id', upload.single("picture") , (req, res) => {
+  const updateData = { ...req.body };
+
+  if (req.file) {
+    updateData.Picture = req.file.filename;
+  }
+  User
+  .findByIdAndUpdate(req.params.id , updateData)
+  .then((result) => {
+    res.redirect("/");
+    console.log(result);
+  }
+)
+  .catch((err) => {
+    console.log(err);
+  })
+});
+
+
+
 
 mongoose
   .connect(
@@ -74,11 +103,9 @@ mongoose
   });
 
 app.post("/new", upload.single("picture"), (req, res) => {
-  console.log(req.body);
-  console.log(req.file);
   const data = new User({
     ...req.body,
-    Picture: req.file ? req.file.filename : undefined,
+    Picture: req.file ? req.file.filename : "profile-icon.webp" ,
   });
   data
     .save()

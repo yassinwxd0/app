@@ -1,19 +1,24 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
 
     <title>Personnel Ledger</title>
 
     <link rel="stylesheet" href="/style.css">
-  </head>
-  <body>
+</head>
+
+<body>
 
     <section class="p-3">
 
@@ -28,67 +33,102 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-12">
-                <div class="table-wrap">
-                    <table class="ledger">
 
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Photo</th>
-                                <th>Name</th>
-                                <th>Age</th>
-                                <th>City</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Post</th>
-                                <th>Start Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <!--
+        <!--
                                 Static example row. 
                                 Repeat this <tr> per employee once your backend supplies the data.
                             -->
-                           <% arr.forEach((element , index) => { %>
-                             <tr>
-                                <td class="idx"><%= index+1 %></td>
-                                <td><img src="/uploads/<%= element.Picture %>" alt="<%= element.Name %>" width="42" height="42" class="avatar"></td>
-                                <td class="name"><%= element.Name %></td>
-                                <td><%= element.Age %></td>
-                                <td><%= element.City %></td>
-                                <td><%= element.Email %></td>
-                                <td class="phone"><%= element.Phone %></td>
-                                <td><%= element.Post %></td>
-                                <td class="date"><%= element.Start_Date %></td> 
-                                <td class="actions">
-                                    <!-- GET -->
-                                    <a href="show/<%= element._id%>" class="btn btn-success"><i class="bi bi-eye"></i></a>
+        <% if (arr.length===0 ) { %>
+            <h1 style="text-align: center;">NO DATA</h1>
+            <% } else { %>
 
-                                    <!-- GET (edit form) -->
-                                    <a href="edit" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-wrap">
+                            <table class="ledger">
 
-                                    <!-- POST (treat as delete on the backend) -->
-                                    <form action="/index/<%= element._id %>?_method=DELETE" method="POST" style="display:inline">
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                           <% }) %>
-                        </tbody>
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Photo</th>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>City</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Post</th>
+                                        <th>Start Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
 
-                    </table>
+                                <tbody>
+
+                                    <% arr.forEach((element , index)=> { %>
+                                        <tr>
+                                            <td class="idx">
+                                                <%= index+1 %>
+                                            </td>
+                                            <td><img src="/uploads/<%= element.Picture %>" alt="<%= element.Name %>"
+                                                    width="42" height="42" class="avatar"></td>
+                                            <td class="name">
+                                                <%= element.Name %>
+                                            </td>
+                                            <td>
+                                                <%= element.Age %>
+                                            </td>
+                                            <td>
+                                                <%= element.City %>
+                                            </td>
+                                            <td>
+                                                <%= element.Email %>
+                                            </td>
+                                            <td class="phone">
+                                                <%= element.Phone %>
+                                            </td>
+                                            <td>
+                                                <%= element.Post %>
+                                            </td>
+                                            <td class="date">
+                                                <%= element.Start_Date %>
+                                            </td>
+                                            <td class="actions">
+                                                <!-- GET -->
+                                                <a href="show/<%= element._id%>" class="btn btn-success"><i
+                                                        class="bi bi-eye"></i></a>
+
+                                                <!-- GET (edit form) -->
+                                                <a href="edit/<%= element._id%>" class="btn btn-primary"><i
+                                                        class="bi bi-pencil-square"></i></a>
+
+                                                <!-- POST (treat as delete on the backend) -->
+                                                <form action="/index/<%= element._id %>?_method=DELETE" method="POST"
+                                                    style="display:inline">
+                                                    <button type="submit" class="btn btn-danger">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                            <% } %>
+
+
+
+
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
 
     </section>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
 </html>
